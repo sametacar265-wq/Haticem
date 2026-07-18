@@ -1,144 +1,302 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Haticem ❤️</title>
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hatice'm ❤️</title>
 
-        body {
-            background-color: #ffdeeb;
-            overflow-x: hidden;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
 
-        /* Kalp Yağmuru Arka Planı */
-        .hearts-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 1;
-        }
+body{
+    background:#ffd6e7;
+    color:#000;
+    overflow-x:hidden;
+    min-height:100vh;
+}
 
-        .heart {
-            position: absolute;
-            color: #ff4d7d;
-            font-size: 20px;
-            animation: fall linear infinite;
-        }
+#hearts{
+    position:fixed;
+    width:100%;
+    height:100%;
+    left:0;
+    top:0;
+    pointer-events:none;
+    overflow:hidden;
+}
 
-        @keyframes fall {
-            0% {
-                transform: translateY(-10vh) rotate(0deg);
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(110vh) rotate(360deg);
-                opacity: 0;
-            }
-        }
+.heart{
+    position:absolute;
+    top:-50px;
+    font-size:20px;
+    animation:fall linear forwards;
+}
 
-        /* Kart Konteyneri */
-        .container {
-            background: rgba(255, 255, 255, 0.95);
-            padding: 30px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(233, 30, 99, 0.2);
-            width: 90%;
-            max-width: 450px;
-            text-align: center;
-            z-index: 10;
-            position: relative;
-        }
+@keyframes fall{
+    from{
+        transform:translateY(-50px);
+        opacity:1;
+    }
+    to{
+        transform:translateY(110vh);
+        opacity:0;
+    }
+}
 
-        .header-title {
-            font-size: 32px;
-            color: #d81b60;
-            margin-bottom: 15px;
-        }
+.container{
+    max-width:900px;
+    margin:auto;
+    padding:40px 20px;
+    text-align:center;
+}
 
-        .poem-content {
-            font-size: 18px;
-            line-height: 1.8;
-            color: #4f4f4f;
-            font-style: italic;
-            margin: 25px 0;
-            white-space: pre-line;
-        }
+h1{
+    font-size:55px;
+    margin-top:30px;
+    margin-bottom:25px;
+}
 
-        .floating-heart-btn {
-            display: inline-block;
-            margin-top: 15px;
-            font-size: 40px;
-            animation: pulse 1.5s infinite;
-            cursor: pointer;
-            user-select: none;
-        }
+.intro{
+    font-size:23px;
+    line-height:45px;
+    margin-bottom:50px;
+}
 
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.2); }
-            100% { transform: scale(1); }
-        }
-    </style>
+button{
+    width:260px;
+    padding:18px;
+    margin:15px;
+    border:none;
+    border-radius:40px;
+    background:#ff6b9d;
+    color:white;
+    font-size:20px;
+    cursor:pointer;
+    transition:.3s;
+}
+
+button:hover{
+    transform:scale(1.08);
+    background:#ff3b82;
+}
+
+.card{
+    display:none;
+    background:white;
+    padding:30px;
+    margin-top:30px;
+    border-radius:20px;
+    box-shadow:0 10px 30px rgba(0,0,0,.15);
+    animation:fade .5s;
+}
+
+@keyframes fade{
+    from{
+        opacity:0;
+        transform:translateY(20px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+.card h2{
+    margin-bottom:20px;
+}
+
+.card p{
+    font-size:20px;
+    line-height:40px;
+    margin-bottom:30px;
+}
+
+footer{
+    margin-top:70px;
+    font-size:22px;
+    padding-bottom:30px;
+}
+</style>
+
 </head>
+
 <body>
 
-    <div class="hearts-bg" id="hearts-container"></div>
+<div id="hearts"></div>
 
-    <div class="container">
-        <h1 class="header-title">Hatice'me ❤️</h1>
-        <div class="poem-content">
-            Gökyüzü olsam, yine seni izlerdim,
-            Bir şiir olsam, sadece seni söylerdim.
-            Dünyanın en güzel kalbine sahip insan,
-            İyi ki varsın, iyi ki hayatımdasın...
-        </div>
-        <!-- Bu kalbe tıkladıkça ekstradan havai fişek gibi kalpler fırlayacak -->
-        <div class="floating-heart-btn" onclick="extraHearts()">💝</div>
-    </div>
+<div class="container">
 
-    <script>
-        // Arka Plandaki Kalp Yağmuru Efekti
-        function createHeart() {
-            const container = document.getElementById('hearts-container');
-            if (!container) return;
-            
-            const heart = document.createElement('div');
-            heart.classList.add('heart');
-            heart.innerHTML = '❤️';
-            heart.style.left = Math.random() * 100 + 'vw';
-            heart.style.animationDuration = Math.random() * 3 + 2 + 's';
-            heart.style.fontSize = Math.random() * 15 + 15 + 'px';
-            
-            container.appendChild(heart);
-            
-            setTimeout(() => {
-                heart.remove();
-            }, 5000);
-        }
+<h1>Hatice'm ❤️</h1>
 
-        // Sürekli kalp yağdır
-        setInterval(createHeart, 400);
+<div class="intro">
 
-        // Butona tıklandığında ekstra kalpler fırlatma fonksiyonu
-        function extraHearts() {
-            for(let i=0; i<15; i++) {
-                setTimeout(createHeart, i * 100);
-            }
-        }
-    </script>
+Sen geldin, kalbim kendine bir yuva buldu,<br>
+
+Gözlerin en karanlık geceme sabah oldu.<br>
+
+Ne zaman adını ansam içim umutla doluyor,<br>
+
+Aşk dediğim her şey, sende anlam buluyor.
+
+</div>
+
+<button onclick="goster('siir')">🍷 Şiirler</button>
+
+<button onclick="goster('akrostis')">📜 Akrostiş</button>
+
+<button onclick="goster('gunluk')">📔 Günlük</button>
+<div id="siir" class="card">
+
+<h2>🍷 Şiirler</h2>
+
+<p>
+
+<b>1.</b><br><br>
+
+Aşk, adını kalbime sessizce yazan en güzel hikâye,<br>
+
+Gülüşünle başlayan, sonsuza uzanan bir dua.
+
+</p>
+
+<p>
+
+<b>2.</b><br><br>
+
+Bir tek elini tutmak bile dünyaya bedel,<br>
+
+Çünkü senin olduğun yerde, kalbim hep eve döner.
+
+</p>
+
+</div>
+
+<div id="akrostis" class="card">
+
+<h2>📜 Akrostişler</h2>
+
+<p>
+
+<b>1.</b><br><br>
+
+Hayatımın en güzel tesadüfüsün,<br>
+
+Aşkınla kalbime huzur oldun.<br>
+
+Tüm hayallerim seninle tamam,<br>
+
+İçimde açan en güzel baharsın.<br>
+
+Canımın en kıymetli köşesisin,<br>
+
+Ebediyen seveceğim tek kişisin.
+
+</p>
+
+<p>
+
+<b>2.</b><br><br>
+
+Her gülüşün içimi ısıtır,<br>
+
+Adını duyunca kalbim hızlanır.<br>
+
+Tek dileğim hep yanında olmak,<br>
+
+İyi ki yollarımız kesişmiş.<br>
+
+Canımdan çok sevdiğim sensin,<br>
+
+En güzel hikâyem hep sen olacaksın.
+
+</p>
+
+<p>
+
+<b>3.</b><br><br>
+
+Huzuru gözlerinde buldum,<br>
+
+Aşkı seninle tanıdım.<br>
+
+Tek duam hiç ayrılmamak,<br>
+
+İçimdeki en güzel his sensin.<br>
+
+Cesaretim oldun her an,<br>
+
+En büyük mutluluğum, Hatice'm oldun.
+
+</p>
+
+</div>
+
+<div id="gunluk" class="card">
+
+<h2>📔 Günlük</h2>
+
+<p style="font-size:35px;">
+
+Benimle sevgili olur musun? 🌹❤️
+
+</p>
+
+</div>
+
+<footer>
+
+Sonsuza kadar ❤️
+
+</footer>
+
+</div>
+<script>
+
+function goster(id){
+
+let kartlar=document.querySelectorAll(".card");
+
+kartlar.forEach(function(kart){
+kart.style.display="none";
+});
+
+document.getElementById(id).style.display="block";
+
+}
+
+function kalpOlustur(){
+
+let kalp=document.createElement("div");
+
+kalp.classList.add("heart");
+
+let kalpler=["❤️","💗","💕","💖"];
+
+kalp.innerHTML=kalpler[Math.floor(Math.random()*kalpler.length)];
+
+kalp.style.left=Math.random()*100+"vw";
+
+kalp.style.fontSize=(18+Math.random()*18)+"px";
+
+kalp.style.animationDuration=(4+Math.random()*5)+"s";
+
+document.getElementById("hearts").appendChild(kalp);
+
+setTimeout(function(){
+kalp.remove();
+},9000);
+
+}
+
+setInterval(kalpOlustur,250);
+
+</script>
+
 </body>
+
 </html>
