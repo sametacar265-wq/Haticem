@@ -61,65 +61,6 @@
             text-align: center;
             z-index: 10;
             position: relative;
-            transition: all 0.5s ease;
-        }
-
-        /* Şifre Ekranı Tasarımı */
-        #auth-screen h2 {
-            color: #d81b60;
-            margin-bottom: 20px;
-            font-size: 24px;
-        }
-
-        .input-group {
-            margin-bottom: 20px;
-        }
-
-        input[type="password"] {
-            width: 100%;
-            padding: 12px 20px;
-            border: 2px solid #ffb3d1;
-            border-radius: 25px;
-            outline: none;
-            font-size: 16px;
-            text-align: center;
-            transition: 0.3s;
-        }
-
-        input[type="password"]:focus {
-            border-color: #d81b60;
-            box-shadow: 0 0 8px rgba(216, 27, 96, 0.3);
-        }
-
-        button {
-            background: linear-gradient(45deg, #ff4d7d, #d81b60);
-            color: white;
-            border: none;
-            padding: 12px 30px;
-            border-radius: 25px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            box-shadow: 0 5px 15px rgba(216, 27, 96, 0.4);
-            transition: 0.3s;
-            width: 100%;
-        }
-
-        button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 7px 20px rgba(216, 27, 96, 0.6);
-        }
-
-        .error-msg {
-            color: #e53935;
-            margin-top: 10px;
-            font-size: 14px;
-            display: none;
-        }
-
-        /* Ana İçerik (Şiir Sayfası) */
-        #main-app {
-            display: none;
         }
 
         .header-title {
@@ -140,9 +81,10 @@
         .floating-heart-btn {
             display: inline-block;
             margin-top: 15px;
-            font-size: 30px;
+            font-size: 40px;
             animation: pulse 1.5s infinite;
             cursor: pointer;
+            user-select: none;
         }
 
         @keyframes pulse {
@@ -157,27 +99,15 @@
     <div class="hearts-bg" id="hearts-container"></div>
 
     <div class="container">
-        <!-- Giriş Ekranı -->
-        <div id="auth-screen">
-            <h2>Giriş Şifresi ❤️</h2>
-            <div class="input-group">
-                <input type="password" id="password-input" placeholder="Şifrenizi girin..." onkeypress="handleKeyPress(event)">
-            </div>
-            <button onclick="checkPassword()">Giriş Yap</button>
-            <div class="error-msg" id="error-message">Hatalı şifre, lütfen tekrar deneyin.</div>
+        <h1 class="header-title">Hatice'me ❤️</h1>
+        <div class="poem-content">
+            Gökyüzü olsam, yine seni izlerdim,
+            Bir şiir olsam, sadece seni söylerdim.
+            Dünyanın en güzel kalbine sahip insan,
+            İyi ki varsın, iyi ki hayatımdasın...
         </div>
-
-        <!-- Şiir Ekranı (İlk başta gizli) -->
-        <div id="main-app">
-            <h1 class="header-title">Hatice'me ❤️</h1>
-            <div class="poem-content" id="poem-text">
-                Gökyüzü olsam, yine seni izlerdim,
-                Bir şiir olsam, sadece seni söylerdim.
-                Dünyanın en güzel kalbine sahip insan,
-                İyi ki varsın, iyi ki hayatımdasın...
-            </div>
-            <div class="floating-heart-btn" onclick="extraHearts()">💝</div>
-        </div>
+        <!-- Bu kalbe tıkladıkça ekstradan havai fişek gibi kalpler fırlayacak -->
+        <div class="floating-heart-btn" onclick="extraHearts()">💝</div>
     </div>
 
     <script>
@@ -202,30 +132,6 @@
 
         // Sürekli kalp yağdır
         setInterval(createHeart, 400);
-
-        // Enter tuşu ile giriş yapabilme
-        function handleKeyPress(event) {
-            if (event.key === 'Enter') {
-                checkPassword();
-            }
-        }
-
-        // Şifre Kontrol Fonksiyonu
-        function checkPassword() {
-            const passwordInput = document.getElementById('password-input').value;
-            const errorMsg = document.getElementById('error-message');
-            
-            // Buraya istediğin şifreyi yazabilirsin (Şu an örnek olarak: hatice123)
-            if (passwordInput === 'hatice123') {
-                document.getElementById('auth-screen').style.display = 'none';
-                document.getElementById('main-app').style.display = 'block';
-            } else {
-                errorMsg.style.display = 'block';
-                // Giriş kutusunu temizle ve odağı tekrar oraya ver
-                document.getElementById('password-input').value = '';
-                document.getElementById('password-input').focus();
-            }
-        }
 
         // Butona tıklandığında ekstra kalpler fırlatma fonksiyonu
         function extraHearts() {
